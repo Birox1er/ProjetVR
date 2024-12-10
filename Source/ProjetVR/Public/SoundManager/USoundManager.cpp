@@ -88,6 +88,7 @@ void USoundManager::StopMusic()
 {
     if (CurrentMusicComponent)
     {
+        GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("Test"));
         CurrentMusicComponent->Stop();
         CurrentMusicComponent = nullptr;
     }
