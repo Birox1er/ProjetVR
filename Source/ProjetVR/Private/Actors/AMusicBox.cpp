@@ -20,9 +20,9 @@ AAMusicBox::AAMusicBox()
 void AAMusicBox::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	SoundManager = NewObject<USoundManager>(this);
 	SoundManager->Initialize(SoundDataTable);
-	SoundManager->PlayMusic(ESoundCustomType::MusicBox);
 	Light = FindComponentByClass<UPointLightComponent>();
 	
 	CrankSystemActor = nullptr;
@@ -38,11 +38,15 @@ void AAMusicBox::BeginPlay()
 void AAMusicBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 	OnTestDelegate.AddDynamic(this, &AAMusicBox::OnCrankStateUpdated);
 	if (bIsPlaying)
 	{
 		MusicTime = FMath::Clamp(MusicTime + (timeToMaxRewind/DeltaTime)*maxRewind, 0.0f, maxRewind); ;
+	}
+	if (MusicTime <0.f and bIsPlaying)
+	{
+		SoundManager->PlayMusic(ESoundCustomType::MusicBox);
 	}
 	if (MusicTime > 0.f and MusicTime-DeltaTime < 0.f)
 	{

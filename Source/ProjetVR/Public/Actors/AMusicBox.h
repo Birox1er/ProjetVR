@@ -35,6 +35,7 @@ public:
 	void SetMusicTime (float Time);
 	UFUNCTION(BlueprintCallable)
 	void AddMusicTime (float Time);
+	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	float MusicTime = 0.0f;
 	UPointLightComponent* Light;
 
