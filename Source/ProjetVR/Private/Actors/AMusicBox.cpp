@@ -3,7 +3,7 @@
 
 #include "Actors/AMusicBox.h"
 
-#include "GameFramework/GameModeBase.h"
+
 #include "GameMode/AMyGameMode.h"
 #include "Kismet/GameplayStatics.h"
 #include "SoundManager/USoundManager.h"
@@ -38,6 +38,8 @@ void AAMusicBox::BeginPlay()
 void AAMusicBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	OnTestDelegate.AddDynamic(this, &AAMusicBox::OnCrankStateUpdated);
 	if (bIsPlaying)
 	{
 		MusicTime = FMath::Clamp(MusicTime + (timeToMaxRewind/DeltaTime)*maxRewind, 0.0f, maxRewind); ;
@@ -53,6 +55,13 @@ void AAMusicBox::Tick(float DeltaTime)
 		Light->MarkRenderStateDirty();
 	}
 	
+}
+
+void AAMusicBox::OnCrankStateUpdated(bool IsRunning, int CranksGrabbed)
+{
+	UE_LOG(LogTemp, Log, TEXT("Crank State Updated from Blueprint: IsRunning = %s, CranksGrabbed = %d"), 
+		IsRunning ? TEXT("True") : TEXT("False"), CranksGrabbed);
+	bIsPlaying = IsRunning;
 }
 
 void AAMusicBox::MusicEnded()

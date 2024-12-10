@@ -9,6 +9,7 @@
 
 class USoundManager;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(OnCrankStateUpdate, bool, IsRunning, int, CranksGrabbed);
 UCLASS()
 class PROJETVR_API AAMusicBox : public AActor
 {
@@ -25,8 +26,11 @@ protected:
 public:
 	// Called every frame	
 	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintCallable)
+	void OnCrankStateUpdated(bool IsRunning, int CranksGrabbed);
 	void MusicEnded();
-
+	UPROPERTY(BlueprintAssignable, Category = "Test")
+	OnCrankStateUpdate OnTestDelegate;
 	UFUNCTION(BlueprintCallable)
 	void SetMusicTime (float Time);
 	UFUNCTION(BlueprintCallable)
