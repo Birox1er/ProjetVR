@@ -9,7 +9,7 @@
 
 class USoundManager;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(OnCrankStateUpdate, bool, IsRunning, int, CranksGrabbed);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCrankStateUpdate, bool, IsRunning, int, CranksGrabbed);
 UCLASS()
 class PROJETVR_API AAMusicBox : public AActor
 {
@@ -30,7 +30,7 @@ public:
 	void OnCrankStateUpdated(bool IsRunning, int CranksGrabbed);
 	void MusicEnded();
 	UPROPERTY(BlueprintAssignable, Category = "Test")
-	OnCrankStateUpdate OnTestDelegate;
+	FOnCrankStateUpdate OnTestDelegate;
 	UFUNCTION(BlueprintCallable)
 	void SetMusicTime (float Time);
 	UFUNCTION(BlueprintCallable)
@@ -51,7 +51,7 @@ public:
 	UPROPERTY()
 	bool bIsPlaying = false;
 	
-private:
+private:	
 	UPROPERTY()	
 	USoundManager* SoundManager;
 	UPROPERTY()	
