@@ -1,12 +1,12 @@
-#include "ACustomGameMode.h"
+#include "AMyGameMode.h"
 #include "SoundManager/USoundManager.h"
 
-ACustomGameMode::ACustomGameMode()
+AMyGameMode::AMyGameMode()
 {
 	// Set default values
 }
 
-void ACustomGameMode::BeginPlay()
+void AMyGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -19,7 +19,7 @@ void ACustomGameMode::BeginPlay()
 	SoundManager->PlayMusic(ESoundCustomType::Music);
 }
 
-void ACustomGameMode::ChangeBackgroundMusic(ESoundCustomType NewMusicType)
+void AMyGameMode::ChangeBackgroundMusic(ESoundCustomType NewMusicType)
 {
 	if (SoundManager)
 	{
