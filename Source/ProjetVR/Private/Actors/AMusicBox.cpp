@@ -42,8 +42,9 @@ void AAMusicBox::Tick(float DeltaTime)
 	OnTestDelegate.AddDynamic(this, &AAMusicBox::OnCrankStateUpdated);
 	if (bIsPlaying)
 	{
-		MusicTime = FMath::Clamp(MusicTime + (timeToMaxRewind/DeltaTime)*maxRewind, 0.0f, maxRewind); ;
-	}
+		MusicTime = FMath::Clamp(MusicTime + (timeToMaxRewind*DeltaTime)*maxRewind, 0.0f, maxRewind); ;
+	
+}
 	if (MusicTime <0.f and bIsPlaying)
 	{
 		SoundManager->PlayMusic(ESoundCustomType::MusicBox);
