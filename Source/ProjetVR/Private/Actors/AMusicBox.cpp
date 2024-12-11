@@ -24,7 +24,7 @@ void AAMusicBox::BeginPlay()
 	SoundManager = NewObject<USoundManager>(this);
 	SoundManager->Initialize(SoundDataTable);
 	Light = FindComponentByClass<UPointLightComponent>();
-	
+	SoundManager->PlayMusic(ESoundCustomType::MusicBox);
 	CrankSystemActor = nullptr;
 	TArray<AActor*> ActorsWithTag;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("CrankSystem"), ActorsWithTag);
