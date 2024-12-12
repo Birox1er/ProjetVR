@@ -11,5 +11,6 @@ enum class ESoundCustomType : uint8
 	PlayerAction,
 	EnemyAction,
 	UI,
-	Cinematic
+	Cinematic,
+	MusicBox,
 };
