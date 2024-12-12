@@ -17,6 +17,8 @@ public:
 	void PlayUISound(ESoundCustomType SoundType);
 	void PlayMusic(ESoundCustomType SoundType);
 	void StopMusic();
+	void SetVolume(float Volume);
+	void SetPitch(float Pitch);
 
 private:
 	UPROPERTY()
