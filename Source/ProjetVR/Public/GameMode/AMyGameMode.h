@@ -20,10 +20,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ChangeBackgroundMusic(ESoundCustomType NewMusicType);
 
-private:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "Sound")
 	USoundManager* SoundManager;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Sound")
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Sound")
 	UDataTable* SoundDataTable;
 };

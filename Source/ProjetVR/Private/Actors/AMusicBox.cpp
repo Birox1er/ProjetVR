@@ -4,6 +4,7 @@
 #include "Actors/AMusicBox.h"
 
 
+#include "ToolBuilderUtil.h"
 #include "GameMode/AMyGameMode.h"
 #include "Kismet/GameplayStatics.h"
 #include "SoundManager/USoundManager.h"
@@ -23,8 +24,19 @@ void AAMusicBox::BeginPlay()
 	
 	SoundManager = NewObject<USoundManager>(this);
 	SoundManager->Initialize(SoundDataTable);
-	Light = FindComponentByClass<UPointLightComponent>();
 	SoundManager->PlayMusic(ESoundCustomType::MusicBox);
+
+	TArray<USceneComponent*> ChildComponents;
+	GetRootComponent()->GetChildrenComponents(true, ChildComponents);
+
+	for (USceneComponent* Component : ChildComponents)
+	{
+		if (USpotLightComponent* SpotLight = Cast<USpotLightComponent>(Component))
+		{
+			Lights.Add(SpotLight);
+		}
+	}
+	LightsPivot = FindComponentByTag<USceneComponent>("LightsPivot");
 	CrankSystemActor = nullptr;
 	TArray<AActor*> ActorsWithTag;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("CrankSystem"), ActorsWithTag);
@@ -34,7 +46,6 @@ void AAMusicBox::BeginPlay()
 	}
 }
 
-// Called every frame
 void AAMusicBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -44,7 +55,7 @@ void AAMusicBox::Tick(float DeltaTime)
 	{
 		MusicTime = FMath::Clamp(MusicTime + (timeToMaxRewind*DeltaTime)*maxRewind, 0.0f, maxRewind); ;
 	
-}
+	}
 	if (MusicTime <0.f and bIsPlaying)
 	{
 		SoundManager->PlayMusic(ESoundCustomType::MusicBox);
@@ -53,11 +64,20 @@ void AAMusicBox::Tick(float DeltaTime)
 	{
 		MusicEnded();
 	}
+	FRotator CurrentRotation = LightsPivot->GetComponentRotation();
+	CurrentRotation.Yaw += rotationBaseSpeed*DeltaTime;
+	LightsPivot->SetWorldRotation(CurrentRotation);
 	MusicTime -= DeltaTime;
 	if (MusicTime < 0.0f) MusicTime = 0.0f;
 	if (MusicTime>0.f) {
-		Light->Intensity = FMath::Clamp(MusicTime/(maxRewind/3), 0 , 1)  * maxIntensity;
-		Light->MarkRenderStateDirty();
+		for (USpotLightComponent* Light : Lights)
+		{
+			if (Light)
+			{
+				Light->Intensity = FMath::Clamp(MusicTime/(maxRewind/3), 0 , 1)  * maxIntensity;
+				Light->MarkRenderStateDirty();
+			}
+		}
 	}
 	
 }

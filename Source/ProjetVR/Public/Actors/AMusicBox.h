@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/PointLightComponent.h"
+#include "Components/SpotLightComponent.h"
 #include "GameFramework/Actor.h"
 #include "AMusicBox.generated.h"
 
@@ -37,7 +38,7 @@ public:
 	void AddMusicTime (float Time);
 	UPROPERTY(BlueprintReadWrite,EditAnywhere)
 	float MusicTime = 0.0f;
-	UPointLightComponent* Light;
+	TArray<USpotLightComponent*> Lights;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Sound")
 	UDataTable* SoundDataTable;
@@ -48,6 +49,8 @@ public:
 	float maxRewind = 0.f;
 	UPROPERTY(EditAnywhere, Category = "Sound")
 	float timeToMaxRewind = 0.f;
+	UPROPERTY(EditAnywhere, Category = "Lights")
+	float rotationBaseSpeed = 1.f;
 
 	UPROPERTY()
 	bool bIsPlaying = false;
@@ -57,5 +60,6 @@ private:
 	USoundManager* SoundManager;
 	UPROPERTY()	
 	AActor* CrankSystemActor;
-	
+
+	USceneComponent* LightsPivot;
 };
