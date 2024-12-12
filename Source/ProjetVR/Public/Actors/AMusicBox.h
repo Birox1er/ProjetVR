@@ -44,6 +44,8 @@ public:
 	UDataTable* SoundDataTable;
 
 	UPROPERTY(EditAnywhere, Category = "Sound")
+		float maxVolume = 0.5f;
+	UPROPERTY(EditAnywhere, Category = "Sound")
 	float maxIntensity = 0.f;
 	UPROPERTY(EditAnywhere, Category = "Sound")
 	float maxRewind = 0.f;
@@ -51,6 +53,13 @@ public:
 	float timeToMaxRewind = 0.f;
 	UPROPERTY(EditAnywhere, Category = "Lights")
 	float rotationBaseSpeed = 1.f;
+	UPROPERTY(EditAnywhere, Category = "Lights")
+	float maxOuterAngle = 1.f;
+	UPROPERTY(EditAnywhere, Category = "Lights")
+	float minOuterAngle = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "General")
+	float timeRemainingToFallOff = 3.f;
 
 	UPROPERTY()
 	bool bIsPlaying = false;

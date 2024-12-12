@@ -53,7 +53,7 @@ void AAMusicBox::Tick(float DeltaTime)
 	OnTestDelegate.AddDynamic(this, &AAMusicBox::OnCrankStateUpdated);
 	if (bIsPlaying)
 	{
-		MusicTime = FMath::Clamp(MusicTime + (timeToMaxRewind*DeltaTime)*maxRewind, 0.0f, maxRewind); ;
+		MusicTime = FMath::Clamp(MusicTime + (maxRewind/timeToMaxRewind)*DeltaTime, 0.0f, maxRewind); ;
 	
 	}
 	if (MusicTime <0.f and bIsPlaying)
@@ -65,8 +65,10 @@ void AAMusicBox::Tick(float DeltaTime)
 		MusicEnded();
 	}
 	FRotator CurrentRotation = LightsPivot->GetComponentRotation();
-	CurrentRotation.Yaw += rotationBaseSpeed*DeltaTime;
+	CurrentRotation.Yaw += rotationBaseSpeed*FMath::Clamp(MusicTime/timeRemainingToFallOff, 0 , 1)*DeltaTime;
 	LightsPivot->SetWorldRotation(CurrentRotation);
+	SoundManager->SetVolume(maxVolume*FMath::Clamp(MusicTime/timeRemainingToFallOff, 0 , 1));
+	SoundManager->SetPitch(FMath::Clamp(MusicTime/timeRemainingToFallOff, 0 , 1));
 	MusicTime -= DeltaTime;
 	if (MusicTime < 0.0f) MusicTime = 0.0f;
 	if (MusicTime>0.f) {
@@ -74,7 +76,8 @@ void AAMusicBox::Tick(float DeltaTime)
 		{
 			if (Light)
 			{
-				Light->Intensity = FMath::Clamp(MusicTime/(maxRewind/3), 0 , 1)  * maxIntensity;
+				Light->Intensity = FMath::Clamp(MusicTime/timeRemainingToFallOff, 0 , 1)  * maxIntensity;
+				Light->OuterConeAngle = FMath::Clamp(maxOuterAngle*FMath::Clamp(MusicTime/timeRemainingToFallOff, 0 , 1), minOuterAngle, maxOuterAngle);
 				Light->MarkRenderStateDirty();
 			}
 		}

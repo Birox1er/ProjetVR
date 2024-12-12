@@ -12,11 +12,17 @@ class PROJETVR_API USoundManager : public UObject
 
 public:
 	void Initialize(UDataTable* SoundDataTable);
-    
+	UFUNCTION(BlueprintCallable)
 	void PlayRandomSound(ESoundCustomType SoundType, const FVector& Location);
+	UFUNCTION(BlueprintCallable)
 	void PlayUISound(ESoundCustomType SoundType);
+	UFUNCTION(BlueprintCallable)
 	void PlayMusic(ESoundCustomType SoundType);
+	UFUNCTION(BlueprintCallable)
 	void StopMusic();
+	UFUNCTION(BlueprintCallable)
+	void SetVolume(float Volume);
+	void SetPitch(float Pitch);
 
 private:
 	UPROPERTY()

@@ -93,3 +93,17 @@ void USoundManager::StopMusic()
         CurrentMusicComponent = nullptr;
     }
 }
+void USoundManager::SetVolume(float Volume)
+{
+    if ( CurrentMusicComponent )
+    {
+        CurrentMusicComponent->SetVolumeMultiplier(Volume);
+    }
+}
+void USoundManager::SetPitch(float Pitch)
+{
+    if ( CurrentMusicComponent )
+    {
+        CurrentMusicComponent->SetPitchMultiplier(Pitch);
+    }
+}
