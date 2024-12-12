@@ -50,7 +50,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Sound")
 	float timeToMaxRewind = 0.f;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Lights")
-	float rotationBaseSpeed = 1.f;
+	float rotationBaseSpeed = 30.f;
 
 	UPROPERTY()
 	bool bIsPlaying = false;
